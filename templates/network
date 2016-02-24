@@ -1,0 +1,3 @@
+NETWORKING=yes
+HOSTNAME={{ hostname  | regex_replace('\.', '-') }}
+NOZEROCONF=yes

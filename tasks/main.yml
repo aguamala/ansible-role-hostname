@@ -1,0 +1,25 @@
+---
+# tasks file for ansible-role-hostname
+
+#- debug: msg="System {{ hostname  | regex_replace('\.', '-') }}"
+
+- name: Asigna el nombre del host
+  hostname: name={{ hostname  | regex_replace('\.', '-') }}
+
+- name: set hostname in hosts file
+  lineinfile:
+    dest=/etc/hosts
+    state=present
+    regexp='^127.0.0.1 {{ hostname  | regex_replace('\.', '-') }}'
+    line="127.0.0.1 {{ hostname  | regex_replace('\.', '-') }}"
+
+- name: set sysconfig network
+  template: src=network dest=/etc/sysconfig/ owner=root group=root
+
+- name: update cloud.cfg file
+  lineinfile:
+    dest=/etc/cloud/cloud.cfg
+    state=present
+    regexp='^preserve_hostname'
+    line='preserve_hostname{{':'}} true'
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
