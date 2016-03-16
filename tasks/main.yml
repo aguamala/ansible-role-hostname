@@ -4,14 +4,14 @@
 #- debug: msg="System {{ hostname  | regex_replace('\.', '-') }}"
 
 - name: Asigna el nombre del host
-  hostname: name={{ hostname  | regex_replace('\.', '-') }}
+  hostname: name={{ hostname_replaced }}
 
 - name: set hostname in hosts file
   lineinfile:
     dest=/etc/hosts
     state=present
-    regexp='^127.0.0.1 {{ hostname  | regex_replace('\.', '-') }}'
-    line="127.0.0.1 {{ hostname  | regex_replace('\.', '-') }}"
+    regexp='^127.0.0.1 {{ hostname_replaced }}'
+    line="127.0.0.1 {{ hostname_replaced }}"
 
 - name: set sysconfig network
   template: src=network dest=/etc/sysconfig/ owner=root group=root
