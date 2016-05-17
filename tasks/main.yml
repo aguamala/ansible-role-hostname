@@ -16,6 +16,9 @@
 - name: set sysconfig network
   template: src=network dest=/etc/sysconfig/ owner=root group=root
 
+- name: create cloud.cfg directory
+  file: path=/etc/cloud state=directory owner=root group=root
+
 - name: update cloud.cfg file
   lineinfile:
     dest=/etc/cloud/cloud.cfg
