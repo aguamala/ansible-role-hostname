@@ -23,6 +23,7 @@
   lineinfile:
     dest=/etc/cloud/cloud.cfg
     state=present
+    create=yes
     regexp='^preserve_hostname'
     line='preserve_hostname{{':'}} true'
   when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
